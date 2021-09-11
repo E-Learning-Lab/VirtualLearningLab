@@ -56,7 +56,7 @@ Download an IDE, preferably [VS code](https://code.visualstudio.com/download). L
 git clone https://github.com/E-Learning-Lab/VirtualLearningLab.git
 
 # Access
-cd E-Learning_Lab/
+cd VirtualLearningLab/
 
 # create a virutal enviroment to install your dependencies,
 python -m venv venv
