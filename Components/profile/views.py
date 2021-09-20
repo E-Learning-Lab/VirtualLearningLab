@@ -39,6 +39,27 @@ def profile_detail(request):
     return render(request, "profile_detail.html", context)
     
 @login_required
+def update_profile(request): 
+
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        profile_form = ProfileForm(request.POST,instance=request.user.profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            
+            return redirect(Profile.get_absolute_url(request.user.profile))
+    else:
+        profile_form = ProfileForm(instance=request.user.profile)
+
+    context = {
+        'profile': profile,
+        'profile_form': profile_form,
+    }
+
+    return render(request, "update_profile.html", context)
+
+@login_required
 def enroll_in_course(request, course_id):
     
     request.user.courses.add(course_id)
