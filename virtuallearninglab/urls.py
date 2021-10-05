@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('student/', include("Components.student.urls")),
+    path('student/', include("Components.student.urls")),    
     path('courses', include("Components.courses.urls")),
     path('', include("Components.home.urls")),
     path('profile/', include("Components.profile.urls")),
@@ -33,6 +33,8 @@ urlpatterns = [
     path("student/discussion_board/", include('Components.discussion_board.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('quiz/', include("Components.quiz.urls")),
+    path('newsletter/', include('newsletter.urls')),
+ 
 ]
 
 urlpatterns += staticfiles_urlpatterns()

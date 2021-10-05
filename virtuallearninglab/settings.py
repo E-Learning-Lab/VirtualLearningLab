@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'Components.student',
     'embed_video',
     'Components.courses',
@@ -57,6 +58,9 @@ INSTALLED_APPS = [
     'Components.multichoice',
     'Components.true_false',
     'Components.essay',
+    #newsletter
+    'newsletter',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +78,7 @@ ROOT_URLCONF = 'virtuallearninglab.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['virtuallearninglab/templates/', 'student/templates', 'zoom/templates', 'courses/templates', 'disscussion_board/templates', os.path.join(BASE_DIR, 'templates')],
+        'DIRS': ['virtuallearninglab/templates/', 'virtuallearninglab/templates/newsletter', 'student/templates', 'zoom/templates', 'courses/templates', 'discussion_board/templates', os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,6 +91,28 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGGING = {
+    'version': 1,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    }
+}
 
 WSGI_APPLICATION = 'virtuallearninglab.wsgi.application'
 
@@ -120,8 +146,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#site id
+SITE_ID = 3
+
 # Select Style for Crispy-Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Newsletter
+# Using sorl-thumbnail
+NEWSLETTER_THUMBNAIL = 'sorl-thumbnail'
+
+# Using django-tinymce
+NEWSLETTER_RICHTEXT_WIDGET = "tinymce.widgets.TinyMCE"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
