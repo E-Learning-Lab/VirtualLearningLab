@@ -31,7 +31,7 @@
 
                         {% for course in enrolled_courses %}
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h7>{{ course.name | truncatechars:30 }}</h7>
+                            <h6>{{ course.name | truncatechars:30 }}</h6>
                             <span class="text-secondary"><a href="{% url 'welcome_page' course.id  %}">Visit</a></span>
                         </li>
                         {% endfor %}
@@ -55,7 +55,7 @@
                                 {% for course in courses_list %}
                                 <div class="list-group-item d-flex flex-wrap">
 
-                                    <h7 class="mr-auto">{{ course.name | truncatechars:20 }}</h7>
+                                    <h6 class="mr-auto">{{ course.name | truncatechars:20 }}</h6>
                                     {% if course in enrolled_courses %}
                                     <a class="mr-2 btn btn-danger btn-sm" href="{% url 'unenroll' course.id  %}">-</a>
                                     {% else %}
@@ -129,8 +129,15 @@
                     </div>
                 </div>
 
-                <!-- Update Profile -->
-                <a class="btn btn-sm btn-dark float-right" href="{% url 'update_profile' %}">Update Profile</a>
+                <div id="#access-settings">
+                    <!-- Update Profile -->
+                    <a class="btn btn-sm btn-dark float-right ml-4" href="{% url 'update_profile' %}">Update Profile</a>
+
+                    <!-- Manage Newsletter Subscriptions -->
+                    <a class="btn btn-sm btn-dark float-right" href="{% url 'newsletter_list' %}">Manage
+                        Newsletters</a>
+
+                </div>
 
             </div>
         </div>
