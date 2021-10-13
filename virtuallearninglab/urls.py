@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
+from django.apps import apps
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +34,9 @@ urlpatterns = [
     path("student/discussion_board/", include('Components.discussion_board.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('quiz/', include("Components.quiz.urls")),
+
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('shop/', include(apps.get_app_config('oscar').urls[0])),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
