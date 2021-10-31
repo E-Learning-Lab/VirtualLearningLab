@@ -14,11 +14,12 @@ import os
 
 #  oscar https://django-oscar.readthedocs.io/en/stable/index.html
 from oscar.defaults import *
+from django.utils.translation import gettext_lazy as _
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = os.path.join(BASE_DIR,  "static")
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,14 +31,12 @@ SECRET_KEY = ''
 with open('secret_key.txt') as f:
     SECRET_KEY = f.read().strip()
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['207.154.236.200', 'wwww.elearning-lab.org', 'elearning-lab.org','virtual-learning-lab.herokuapp.com', '127.0.0.1']
 
 # Application definition
-
-
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -94,7 +93,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'profanity',
     'vote',
-     'embed_video',
+    'embed_video',
+    'paypal',
 
     # Custom apps
     'Components.student',   
@@ -137,7 +137,7 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-# oscar needs
+# Oscar needs and Settings
 OSCAR_INITIAL_ORDER_STATUS = 'Pending'
 OSCAR_INITIAL_LINE_STATUS = 'Pending'
 OSCAR_ORDER_STATUS_PIPELINE = {
@@ -146,6 +146,35 @@ OSCAR_ORDER_STATUS_PIPELINE = {
     'Cancelled': (),
 }
 
+OSCAR_SHOP_NAME = 'E-Learning Lab'
+
+
+# PayPal Info
+if DEBUG == True:
+    PAYPAL_API_USERNAME = 'sb-dmkqn8358134@personal.example.com'
+    PAYPAL_API_PASSWORD = '5@I2cldB'
+    PAYPAL_API_SIGNATURE = '...'
+
+    # Add Payflow dashboard stuff to settings
+OSCAR_DASHBOARD_NAVIGATION.append(
+    {
+        'label': _('PayPal'),
+        'icon': 'icon-globe',
+        'children': [
+            {
+                'label': _('PayFlow transactions'),
+                'url_name': 'payflow_dashboard:paypal-payflow-list',
+            },
+            {
+                'label': _('Express transactions'),
+                'url_name': 'express_dashboard:paypal-express-list',
+            },
+            {
+                'label': _('Express Checkout transactions'),
+                'url_name': 'express_checkout_dashboard:paypal-transaction-list',
+            },
+        ]
+    })
 
 
 ROOT_URLCONF = 'virtuallearninglab.urls'
@@ -153,7 +182,7 @@ ROOT_URLCONF = 'virtuallearninglab.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['virtuallearninglab/templates/', 'student/templates', 'zoom/templates', 'courses/templates', 'disscussion_board/templates', os.path.join(BASE_DIR, 'templates')],
+        'DIRS': ['virtuallearninglab/templates/', os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -229,11 +258,11 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "assets"),
 )
 LOGIN_REDIRECT_URL = '/'
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #only for testing, comment out for production
 MEDIA_ROOT = os.path.join(BASE_DIR,  "media")
 STATIC_ROOT = os.path.join(BASE_DIR,  "static")
 MEDIA_URL = '/media/'
 
+# CKEDITOR (rich text editor)
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
@@ -244,7 +273,7 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-OSCAR_MISSING_IMAGE_URL = 'image_not_found.png'
+# EMAIL related Settings (should use 2FA - see google drive credentials file)
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
