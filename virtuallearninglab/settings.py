@@ -111,6 +111,8 @@ INSTALLED_APPS = [
     'Components.essay',
 ]
 
+# SITE_ID = 3
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -148,33 +150,35 @@ OSCAR_ORDER_STATUS_PIPELINE = {
 
 OSCAR_SHOP_NAME = 'E-Learning Lab'
 
+SECURE_SSL_REDIRCT = False
+PAYPAL_CALLBACK_HTTPS = False
 
 # PayPal Info
 if DEBUG == True:
-    PAYPAL_API_USERNAME = 'sb-dmkqn8358134@personal.example.com'
-    PAYPAL_API_PASSWORD = '5@I2cldB'
-    PAYPAL_API_SIGNATURE = '...'
+    PAYPAL_API_USERNAME = ''
+    PAYPAL_API_PASSWORD = ''
+    PAYPAL_API_SIGNATURE = ''
 
     # Add Payflow dashboard stuff to settings
-OSCAR_DASHBOARD_NAVIGATION.append(
-    {
-        'label': _('PayPal'),
-        'icon': 'icon-globe',
-        'children': [
-            {
-                'label': _('PayFlow transactions'),
-                'url_name': 'payflow_dashboard:paypal-payflow-list',
-            },
-            {
-                'label': _('Express transactions'),
-                'url_name': 'express_dashboard:paypal-express-list',
-            },
-            {
-                'label': _('Express Checkout transactions'),
-                'url_name': 'express_checkout_dashboard:paypal-transaction-list',
-            },
-        ]
-    })
+# OSCAR_DASHBOARD_NAVIGATION.append(
+#     {
+#         'label': _('PayPal'),
+#         'icon': 'icon-globe',
+#         'children': [
+#             {
+#                 'label': _('PayFlow transactions'),
+#                 'url_name': 'payflow_dashboard:paypal-payflow-list',
+#             },
+#             {
+#                 'label': _('Express transactions'),
+#                 'url_name': 'express_dashboard:paypal-express-list',
+#             },
+#             {
+#                 'label': _('Express Checkout transactions'),
+#                 'url_name': 'express_checkout_dashboard:paypal-transaction-list',
+#             },
+#         ]
+#     })
 
 
 ROOT_URLCONF = 'virtuallearninglab.urls'
@@ -196,6 +200,7 @@ TEMPLATES = [
                 'oscar.apps.communication.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
             ],
+            # note cached.Loader is automatically enabled if DEBUG = False
         },
     },
 ]
