@@ -111,7 +111,7 @@ INSTALLED_APPS = [
     'Components.essay',
 ]
 
-# SITE_ID = 3
+SITE_ID = 3
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -152,12 +152,13 @@ OSCAR_SHOP_NAME = 'E-Learning Lab'
 
 SECURE_SSL_REDIRCT = False
 PAYPAL_CALLBACK_HTTPS = False
+OSCAR_MISSING_IMAGE_URL = "media/image_not_found.png"
 
 # PayPal Info
 if DEBUG == True:
-    PAYPAL_API_USERNAME = ''
-    PAYPAL_API_PASSWORD = ''
-    PAYPAL_API_SIGNATURE = ''
+    PAYPAL_API_USERNAME = 'sb-vu43my8275251_api1.business.example.com'
+    PAYPAL_API_PASSWORD = 'ZKAD69BZ8PH7QSLL'
+    PAYPAL_API_SIGNATURE = 'ABlX6B8cn95k3I03JQ6k097M-O8xAVaYpVCdYvoJOU7lofDtXYhpgO3g'
 
     # Add Payflow dashboard stuff to settings
 # OSCAR_DASHBOARD_NAVIGATION.append(
